@@ -23,6 +23,7 @@
     "@upstash/qstash": "^0.3.2",
     "next": "13.0.2",
     "next-auth": "^4.18.3",
+    "next-seo": "^5.15.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.0",

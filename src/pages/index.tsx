@@ -1,6 +1,5 @@
 import { type NextPage } from "next";
 import Head from "next/head";
-import { signIn, signOut, useSession } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 
 import { trpc } from "../utils/trpc";
@@ -13,6 +12,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Question } from "@prisma/client";
 import { secondsToStr } from "../utils/helpers";
 import Questions from "../components/Questions";
+import { NextSeo } from "next-seo";
 
 const Home: NextPage = () => {
   const askQuestion = trpc.questions.ask.useMutation();
@@ -115,35 +115,56 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <Head>
-        <title>
-          TwitterQ - Ask questions, get answers from your favourite Twitter
-          users.
-        </title>
-        <meta
-          name="description"
-          content="Have you always wanted to learn more about the incredible community around the world? Find answers here!"
-        />
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/site.webmanifest"></link>
-      </Head>
+      <NextSeo
+        title="TwitterQ - Ask questions, get answers from your favourite Twitter users."
+        description="Have you always wanted to learn more about the incredible community around the world? Find answers here!"
+        canonical="https://www.twitterq.app/"
+        openGraph={{
+          url: "https://www.twitterq.app/og.jpg",
+          title: "Ask questions, get answers! TwitterQ",
+          description:
+            "Have you always wanted to learn more about the incredible community around the world? Find answers here!",
+          images: [
+            {
+              url: "https://www.twitterq.app/og.jpg",
+              width: 1200,
+              height: 630,
+              type: "image/jpeg",
+            },
+          ],
+          siteName: "TwitterQ",
+        }}
+        twitter={{
+          handle: "@thedannyferg",
+          site: "@buildwithdan",
+          cardType: "summary_large_image",
+        }}
+        additionalLinkTags={[
+          {
+            rel: "icon",
+            href: "https://www.twitterq.app/favicon.ico",
+          },
+          {
+            rel: "apple-touch-icon",
+            href: "https://www.twitterq.app/apple-touch-icon.png",
+            sizes: "180x180",
+          },
+          {
+            rel: "icon",
+            href: "https://www.twitterq.app/favicon-32x32.png",
+            type: "image/png",
+          },
+          {
+            rel: "icon",
+            href: "https://www.twitterq.app/favicon-16x16.png",
+            type: "image/png",
+          },
+          {
+            rel: "manifest",
+            href: "https://twitterq.app/site.webmanifest",
+          },
+        ]}
+      />
 
       <Toaster />
 
@@ -358,27 +379,3 @@ const Home: NextPage = () => {
 };
 
 export default Home;
-
-// const AuthShowcase: React.FC = () => {
-//   const { data: sessionData } = useSession();
-
-//   const { data: secretMessage } = trpc.auth.getSecretMessage.useQuery(
-//     undefined, // no input
-//     { enabled: sessionData?.user !== undefined }
-//   );
-
-//   return (
-//     <div className="flex flex-col items-center justify-center gap-4">
-//       <p className="text-center text-2xl text-white">
-//         {sessionData && <span>Logged in as {sessionData.user?.name}</span>}
-//         {secretMessage && <span> - {secretMessage}</span>}
-//       </p>
-//       <button
-//         className="rounded-full bg-white/10 px-10 py-3 font-semibold text-white no-underline transition hover:bg-white/20"
-//         onClick={sessionData ? () => signOut() : () => signIn()}
-//       >
-//         {sessionData ? "Sign out" : "Sign in"}
-//       </button>
-//     </div>
-//   );
-// };

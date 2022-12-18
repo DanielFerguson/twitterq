@@ -15,7 +15,7 @@ const Questions = ({ questions }: QuestionProps) => {
         <div
           id={question.id}
           key={question.id}
-          className="break-inside-avoid rounded border border-gray-300 p-6 text-lg leading-8 shadow-lg dark:border-gray-600 dark:bg-slate-800 dark:text-slate-50"
+          className="break-inside-avoid rounded border border-blue-900 border-opacity-5 p-6 text-lg leading-8 shadow-lg dark:border-gray-600 dark:bg-slate-800 dark:text-slate-50"
           dangerouslySetInnerHTML={{
             __html: question.content.replace(
               `@${question.recipent.username}`,

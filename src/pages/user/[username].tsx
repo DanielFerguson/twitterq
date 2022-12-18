@@ -1,4 +1,3 @@
-import Head from "next/head";
 import { type NextPage } from "next";
 import { useRouter } from "next/router";
 import { trpc } from "../../utils/trpc";
@@ -8,6 +7,7 @@ import Link from "next/link";
 import Stats from "../../components/Stats";
 import { secondsToStr } from "../../utils/helpers";
 import Questions from "../../components/Questions";
+import { NextSeo } from "next-seo";
 
 const Page: NextPage = () => {
   const router = useRouter();
@@ -28,29 +28,55 @@ const Page: NextPage = () => {
 
   return (
     <div>
-      <Head>
-        <title>{user.data?.friendlyName} - TwitterQ</title>
-        <meta name="description" content={user.data?.description} />
-        <link rel="icon" href="/favicon.ico" />
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/apple-touch-icon.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/favicon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/favicon-16x16.png"
-        />
-        <link rel="manifest" href="/site.webmanifest"></link>
-      </Head>
+      <NextSeo
+        title={`${user.data?.friendlyName} - TwitterQ`}
+        description={user.data?.description}
+        canonical={`https://www.twitterq.app/user/${user.data?.username}`}
+        openGraph={{
+          url: "https://www.twitterq.app/og.jpg",
+          title: "Ask questions, get answers! TwitterQ",
+          description: user.data?.description,
+          images: [
+            {
+              url: "https://www.twitterq.app/og.jpg",
+              width: 1200,
+              height: 630,
+              type: "image/jpeg",
+            },
+          ],
+          siteName: "TwitterQ",
+        }}
+        twitter={{
+          handle: `@${user.data?.username}`,
+          site: "@buildwithdan",
+          cardType: "summary_large_image",
+        }}
+        additionalLinkTags={[
+          {
+            rel: "icon",
+            href: "https://www.twitterq.app/favicon.ico",
+          },
+          {
+            rel: "apple-touch-icon",
+            href: "https://www.twitterq.app/apple-touch-icon.png",
+            sizes: "180x180",
+          },
+          {
+            rel: "icon",
+            href: "https://www.twitterq.app/favicon-32x32.png",
+            type: "image/png",
+          },
+          {
+            rel: "icon",
+            href: "https://www.twitterq.app/favicon-16x16.png",
+            type: "image/png",
+          },
+          {
+            rel: "manifest",
+            href: "https://twitterq.app/site.webmanifest",
+          },
+        ]}
+      />
 
       <main className="mx-auto max-w-7xl py-8 px-8 md:px-12">
         <NavBar />
@@ -61,7 +87,7 @@ const Page: NextPage = () => {
             <img
               src={user.data?.profileImageUrl.replace("_normal", "")}
               alt={user.data?.friendlyName}
-              className="h-56 w-56 rounded-full"
+              className="h-56 w-56 rounded-full shadow-lg"
             />
             <div className="max-w-md">
               <h2 className="text-2xl font-bold">{user.data?.friendlyName}</h2>
@@ -153,7 +179,7 @@ const Page: NextPage = () => {
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
                 Other accounts
               </h2>
-              <p className="text-xl text-gray-500">
+              <p className="text-lg leading-8 tracking-wide text-gray-500">
                 Check out other interested accounts that have asked questions!
                 Can&apos;t see someone you&apos;re looking for? Ask them to join
                 by sending them a question on the home page!
@@ -174,19 +200,19 @@ const Page: NextPage = () => {
                       />
                       <Link
                         href={`/user/${account.username}`}
-                        className="space-y-1 text-lg font-medium leading-6"
+                        className="space-y-2 leading-6"
                       >
-                        <h3 className="text-blue-600 hover:text-blue-800">
+                        <h3 className="text-lg font-medium text-blue-600 hover:text-blue-800">
                           {account.friendlyName}
                         </h3>
-                        <p className="text-gray-700">
+                        <p className="-mt-4 text-sm text-gray-500">
+                          @{account.username}
+                        </p>
+                        <p className="leading-8 tracking-wide text-gray-800">
                           {account.description
                             .replace(/https:\/\/t.co\/\w+/g, "")
                             .slice(0, 100)}
-                          {account.description.replace(
-                            /https:\/\/t.co\/\w+/g,
-                            ""
-                          ).length > 100 && "..."}
+                          {account.description.length > 100 && "..."}
                         </p>
                       </Link>
                     </div>
