@@ -4,7 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 
 import { trpc } from "../utils/trpc";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useRef, useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Stats from "../components/Stats";
@@ -34,6 +34,12 @@ const Home: NextPage = () => {
     const askParam = urlParams.get("ask");
     if (askParam) {
       setQuery(`@${askParam.replace("@", "")}, ...`);
+    }
+  }, []);
+
+  const questionInput = useCallback((inputElement: any) => {
+    if (inputElement) {
+      inputElement.focus();
     }
   }, []);
 
@@ -174,7 +180,7 @@ const Home: NextPage = () => {
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pt-5 pb-4 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-sm sm:p-6">
                   <div>
-                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-indigo-600">
+                    <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-blue-600">
                       <span className="text-xl">👋</span>
                     </div>
                     <div className="mt-3 text-center sm:mt-5">
@@ -189,7 +195,7 @@ const Home: NextPage = () => {
                           type="email"
                           name="email"
                           id="email"
-                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+                          className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm"
                           placeholder="you@example.com"
                           value={emailAddress}
                           onChange={(e) => setEmailAddress(e.target.value)}
@@ -206,14 +212,14 @@ const Home: NextPage = () => {
                   <div className="mt-5 sm:mt-6 sm:grid sm:grid-flow-row-dense sm:grid-cols-2 sm:gap-3">
                     <button
                       type="button"
-                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
+                      className="inline-flex w-full justify-center rounded-md border border-transparent bg-blue-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:col-start-2 sm:text-sm"
                       onClick={() => registerNotificationIntent()}
                     >
                       Let me know!
                     </button>
                     <button
                       type="button"
-                      className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
+                      className="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 sm:col-start-1 sm:mt-0 sm:text-sm"
                       onClick={() => setOpen(false)}
                       ref={cancelButtonRef}
                     >
@@ -234,16 +240,29 @@ const Home: NextPage = () => {
         {/* Main Content */}
         <div className="mt-20 flex flex-col items-center justify-center gap-12 md:mt-32">
           {/* Title */}
-          <h1 className="text-center text-5xl font-bold dark:text-white md:text-6xl">
-            Get the answers you&apos;ve <br className="hidden md:block" />{" "}
-            always wanted.
+          <h1 className="font-display mx-auto max-w-4xl text-center text-5xl font-medium tracking-tight text-slate-900 sm:text-7xl">
+            Get{" "}
+            <span className="relative whitespace-nowrap text-blue-600">
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 418 42"
+                className="absolute top-2/3 left-0 h-[0.58em] w-full fill-blue-300/70"
+                preserveAspectRatio="none"
+              >
+                <path d="M203.371.916c-26.013-2.078-76.686 1.963-124.73 9.946L67.3 12.749C35.421 18.062 18.2 21.766 6.004 25.934 1.244 27.561.828 27.778.874 28.61c.07 1.214.828 1.121 9.595-1.176 9.072-2.377 17.15-3.92 39.246-7.496C123.565 7.986 157.869 4.492 195.942 5.046c7.461.108 19.25 1.696 19.17 2.582-.107 1.183-7.874 4.31-25.75 10.366-21.992 7.45-35.43 12.534-36.701 13.884-2.173 2.308-.202 4.407 4.442 4.734 2.654.187 3.263.157 15.593-.78 35.401-2.686 57.944-3.488 88.365-3.143 46.327.526 75.721 2.23 130.788 7.584 19.787 1.924 20.814 1.98 24.557 1.332l.066-.011c1.201-.203 1.53-1.825.399-2.335-2.911-1.31-4.893-1.604-22.048-3.261-57.509-5.556-87.871-7.36-132.059-7.842-23.239-.254-33.617-.116-50.627.674-11.629.54-42.371 2.494-46.696 2.967-2.359.259 8.133-3.625 26.504-9.81 23.239-7.825 27.934-10.149 28.304-14.005.417-4.348-3.529-6-16.878-7.066Z" />
+              </svg>
+              <span className="relative">answers</span>
+            </span>{" "}
+            for all your questions.
           </h1>
 
           {/* Input */}
           <div className="relative w-full md:max-w-md">
-            <div className="h-[9em] overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-indigo-500 focus-within:ring-1 focus-within:ring-indigo-500">
+            <div className="h-[9em] overflow-hidden rounded-lg border border-gray-300 shadow-sm focus-within:border-blue-500 focus-within:ring-1 focus-within:ring-blue-500">
               <textarea
                 rows={3}
+                autoFocus
+                ref={questionInput}
                 className="block w-full resize-none border-0 py-3 focus:ring-0 dark:bg-gray-900 dark:text-gray-50 sm:text-sm"
                 placeholder="Ask your favourite Twitter user a question!"
                 value={query}
@@ -292,7 +311,7 @@ const Home: NextPage = () => {
                     }`;
                   }
                 }}
-                className="block w-full rounded-md border-none placeholder:text-gray-300 focus:border-indigo-500 focus:shadow-sm focus:ring-indigo-500 sm:text-sm"
+                className="block w-full rounded-md border-none placeholder:text-gray-300 focus:border-blue-500 focus:shadow-sm focus:ring-blue-500 sm:text-sm"
                 placeholder="@thedannyferg"
               />
             </div>

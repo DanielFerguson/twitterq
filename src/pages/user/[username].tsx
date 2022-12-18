@@ -85,7 +85,7 @@ const Page: NextPage = () => {
               </p>
 
               <Link href={`/?ask=${user.data?.username}`}>
-                <button className="mt-6 rounded bg-indigo-600 py-2 px-4 font-bold text-white hover:bg-indigo-700">
+                <button className="mt-6 rounded bg-blue-600 py-2 px-4 font-bold text-white hover:bg-blue-700">
                   Ask @{user.data?.username} a question
                 </button>
               </Link>
@@ -137,7 +137,7 @@ const Page: NextPage = () => {
               <div className="inline-flex rounded-md shadow">
                 <Link
                   href={`/?ask=${username}`}
-                  className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-5 py-3 text-base font-medium text-white hover:bg-indigo-700"
+                  className="inline-flex items-center justify-center rounded-md border border-transparent bg-blue-600 px-5 py-3 text-base font-medium text-white hover:bg-blue-700"
                 >
                   Ask @{username} a question!
                 </Link>
@@ -176,7 +176,7 @@ const Page: NextPage = () => {
                         href={`/user/${account.username}`}
                         className="space-y-1 text-lg font-medium leading-6"
                       >
-                        <h3 className="text-indigo-600 hover:text-indigo-800">
+                        <h3 className="text-blue-600 hover:text-blue-800">
                           {account.friendlyName}
                         </h3>
                         <p className="text-gray-700">

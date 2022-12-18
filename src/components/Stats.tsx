@@ -14,7 +14,7 @@ const Stats = ({ stats }: StatsProps) => {
         <dt className="order-2 mt-2 font-medium leading-6 text-gray-500 dark:text-slate-400 md:text-lg">
           {stats[0].prompt}
         </dt>
-        <dd className="order-1 text-3xl font-bold tracking-tight text-indigo-600 dark:text-slate-100 md:text-5xl">
+        <dd className="order-1 text-3xl font-bold tracking-tight text-blue-600 dark:text-slate-100 md:text-5xl">
           {stats[0].value}
         </dd>
       </div>
@@ -22,7 +22,7 @@ const Stats = ({ stats }: StatsProps) => {
         <dt className="order-2 mt-2 font-medium leading-6 text-gray-500 dark:text-slate-400 md:text-lg">
           {stats[1].prompt}
         </dt>
-        <dd className="order-1 text-3xl font-bold tracking-tight text-indigo-600 dark:text-slate-100 md:text-5xl">
+        <dd className="order-1 text-3xl font-bold tracking-tight text-blue-600 dark:text-slate-100 md:text-5xl">
           {stats[1].value}
         </dd>
       </div>
@@ -30,7 +30,7 @@ const Stats = ({ stats }: StatsProps) => {
         <dt className="order-2 mt-2 font-medium leading-6 text-gray-500 dark:text-slate-400 md:text-lg">
           {stats[2].prompt}
         </dt>
-        <dd className="order-1 text-3xl font-bold tracking-tight text-indigo-600 dark:text-slate-100 md:text-5xl">
+        <dd className="order-1 text-3xl font-bold tracking-tight text-blue-600 dark:text-slate-100 md:text-5xl">
           {stats[2].value}
         </dd>
       </div>
