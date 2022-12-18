@@ -4,42 +4,15 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 
 import { trpc } from "../utils/trpc";
-import { Fragment, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer";
 import Stats from "../components/Stats";
 
 import { Dialog, Transition } from "@headlessui/react";
 import { Question } from "@prisma/client";
-
-function secondsToStr(seconds: number) {
-  function numberEnding(number: number) {
-    return number > 1 ? "s" : "";
-  }
-
-  let temp = Math.floor(seconds);
-  const years = Math.floor(temp / 31536000);
-  if (years) {
-    return years + " year" + numberEnding(years);
-  }
-  const days = Math.floor((temp %= 31536000) / 86400);
-  if (days) {
-    return days + " day" + numberEnding(days);
-  }
-  const hours = Math.floor((temp %= 86400) / 3600);
-  if (hours) {
-    return hours + " hour" + numberEnding(hours);
-  }
-  const minutes = Math.floor((temp %= 3600) / 60);
-  if (minutes) {
-    return minutes + " minute" + numberEnding(minutes);
-  }
-  const secondsFormatted = temp % 60;
-  if (secondsFormatted) {
-    return secondsFormatted + " second" + numberEnding(secondsFormatted);
-  }
-  return "less than a second";
-}
+import { secondsToStr } from "../utils/helpers";
+import Questions from "../components/Questions";
 
 const Home: NextPage = () => {
   const askQuestion = trpc.questions.ask.useMutation();
@@ -53,9 +26,16 @@ const Home: NextPage = () => {
   const [emailAddress, setEmailAddress] = useState("");
   const [question, setQuestion] = useState<Question | null>(null);
 
-  const [query, setQuery] = useState(
-    "@thedannyferg why did you make this platform?"
-  );
+  const [query, setQuery] = useState("");
+
+  // Check if ?ask is present in the URL
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const askParam = urlParams.get("ask");
+    if (askParam) {
+      setQuery(`@${askParam.replace("@", "")}, ...`);
+    }
+  }, []);
 
   const submitQuestion = async (query: string) => {
     // Check that the query is not empty
@@ -328,28 +308,11 @@ const Home: NextPage = () => {
         </div>
 
         {/* Existing questions */}
-        <div className="mt-12 columns-1 gap-6 space-y-6 md:mt-24 md:columns-4">
-          {questions.data?.map((question) => (
-            <div
-              id={question.id}
-              key={question.id}
-              className="break-inside-avoid rounded border border-gray-300 p-6 text-lg leading-8 shadow-lg dark:border-gray-600 dark:bg-slate-800 dark:text-slate-50"
-              dangerouslySetInnerHTML={{
-                __html: question.content.replace(
-                  `@${question.recipent.username}`,
-                  `<a href="/user/${question.recipent.username}" class="text-blue-500 dark:text-blue-400 dark:hover:text-blue-600">
-                    <img
-                      src="${question.recipent.profileImageUrl}"
-                      alt="Profile Image"
-                      class="h-6 w-6 inline rounded-full"
-                    />
-                    @${question.recipent.username}
-                  </a>`
-                ),
-              }}
-            />
-          ))}
-        </div>
+        {questions.data && (
+          <div className="mt-12 md:mt-24">
+            <Questions questions={questions.data} />
+          </div>
+        )}
 
         <Footer />
       </main>

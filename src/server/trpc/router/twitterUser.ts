@@ -9,6 +9,9 @@ export const twitterUserRouter = router({
       // Check if this user exists
       let user = await ctx.prisma.twitterAccount.findUnique({
         where: { username: input.username },
+        include: {
+          questions: true,
+        },
       });
 
       // If the user doesn't exist, fetch their data from Twitter and save them to the database
@@ -31,6 +34,9 @@ export const twitterUserRouter = router({
             friendlyName: data.name,
             description: data.description,
             profileImageUrl: data.profile_image_url_https,
+          },
+          include: {
+            questions: true,
           },
         });
       }

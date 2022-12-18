@@ -10,6 +10,22 @@ export const questionRouter = router({
       },
     });
   }),
+  getForUser: publicProcedure
+    .input(z.object({ username: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const user = await ctx.prisma.twitterAccount.findUnique({
+        where: { username: input.username },
+      });
+
+      if (!user) throw new Error("User not found");
+
+      return ctx.prisma.question.findMany({
+        where: { twitterAccountId: user.id },
+        include: {
+          recipent: true,
+        },
+      });
+    }),
   ask: publicProcedure
     .input(z.object({ question: z.string() }))
     .mutation(async ({ ctx, input }) => {
