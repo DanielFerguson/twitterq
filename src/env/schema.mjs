@@ -22,6 +22,8 @@ export const serverSchema = z.object({
   TWITTER_BEARER_TOKEN: z.string(),
   TWITTER_CLIENT_ID: z.string(),
   TWITTER_CLIENT_SECRET: z.string(),
+  QSTASH_CURRENT_SIGNING_KEY: z.string(),
+  QSTASH_NEXT_SIGNING_KEY: z.string(),
 });
 
 /**

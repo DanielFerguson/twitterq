@@ -47,6 +47,9 @@ export const twitterUserRouter = router({
       // Return the user
       return user;
     }),
+  getAll: publicProcedure.query(async ({ ctx }) => {
+    return ctx.prisma.twitterAccount.findMany();
+  }),
   getOtherAccounts: publicProcedure
     .input(z.object({ notUser: z.string(), limit: z.number().optional() }))
     .query(({ ctx, input }) => {

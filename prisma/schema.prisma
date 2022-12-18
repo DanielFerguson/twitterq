@@ -71,7 +71,7 @@ model TwitterAccount {
 
 model Question {
   id         String         @id @default(cuid())
-  askedAt    DateTime       @default(now())
+  askedAt    DateTime?
   answeredAt DateTime?
   content    String
   recipent   TwitterAccount @relation(fields: [twitterAccountId], references: [id])
