@@ -3,7 +3,7 @@ import { prisma } from "../../../server/db/client";
 import { verifySignature } from "@upstash/qstash/nextjs";
 
 const postQuestions = async (req: NextApiRequest, res: NextApiResponse) => {
-  if (req.method !== "GET") {
+  if (req.method !== "POST") {
     return res.status(405).end();
   }
 
