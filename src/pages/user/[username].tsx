@@ -66,8 +66,8 @@ const Page: NextPage = () => {
               </h2>
               <p className="text-xl text-gray-500">
                 Check out other interested accounts that have asked questions!
-                Can't see someone you're looking for? Ask them to join by
-                sending them a question on the home page!
+                Can&apos;t see someone you&apos;re looking for? Ask them to join
+                by sending them a question on the home page!
               </p>
             </div>
             <div className="lg:col-span-2">

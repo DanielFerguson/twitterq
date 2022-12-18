@@ -17,28 +17,28 @@ function secondsToStr(seconds: number) {
     return number > 1 ? "s" : "";
   }
 
-  var temp = Math.floor(seconds);
-  var years = Math.floor(temp / 31536000);
+  let temp = Math.floor(seconds);
+  const years = Math.floor(temp / 31536000);
   if (years) {
     return years + " year" + numberEnding(years);
   }
-  var days = Math.floor((temp %= 31536000) / 86400);
+  const days = Math.floor((temp %= 31536000) / 86400);
   if (days) {
     return days + " day" + numberEnding(days);
   }
-  var hours = Math.floor((temp %= 86400) / 3600);
+  const hours = Math.floor((temp %= 86400) / 3600);
   if (hours) {
     return hours + " hour" + numberEnding(hours);
   }
-  var minutes = Math.floor((temp %= 3600) / 60);
+  const minutes = Math.floor((temp %= 3600) / 60);
   if (minutes) {
     return minutes + " minute" + numberEnding(minutes);
   }
-  var seconds = temp % 60;
-  if (seconds) {
-    return seconds + " second" + numberEnding(seconds);
+  const secondsFormatted = temp % 60;
+  if (secondsFormatted) {
+    return secondsFormatted + " second" + numberEnding(secondsFormatted);
   }
-  return "less than a second"; //'just now' //or other string you like;
+  return "less than a second";
 }
 
 const Home: NextPage = () => {
@@ -184,7 +184,7 @@ const Home: NextPage = () => {
                         as="h3"
                         className="text-lg font-medium leading-6 text-gray-900"
                       >
-                        We'll keep you in the loop!
+                        We&apos;ll keep you in the loop!
                       </Dialog.Title>
                       <div className="mt-4 grid gap-y-4">
                         <input
@@ -199,8 +199,8 @@ const Home: NextPage = () => {
 
                         <p className="text-sm text-gray-500">
                           If you want, we can send you an email once we get a
-                          response to your question. We promise we'll never spam
-                          you.
+                          response to your question. We promise we&apos;ll never
+                          spam you.
                         </p>
                       </div>
                     </div>
@@ -219,7 +219,7 @@ const Home: NextPage = () => {
                       onClick={() => setOpen(false)}
                       ref={cancelButtonRef}
                     >
-                      Nah, I'm good.
+                      Nah, I&apos;m good.
                     </button>
                   </div>
                 </Dialog.Panel>
@@ -237,8 +237,8 @@ const Home: NextPage = () => {
         <div className="mt-20 flex flex-col items-center justify-center gap-12 md:mt-32">
           {/* Title */}
           <h1 className="text-center text-5xl font-bold dark:text-white md:text-6xl">
-            Get the answers you've <br className="hidden md:block" /> always
-            wanted.
+            Get the answers you&apos;ve <br className="hidden md:block" />{" "}
+            always wanted.
           </h1>
 
           {/* Input */}
