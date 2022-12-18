@@ -19,9 +19,14 @@ const Questions = ({ questions }: QuestionProps) => {
           dangerouslySetInnerHTML={{
             __html: question.content.replace(
               `@${question.recipent.username}`,
-              `<a href="/user/${question.recipent.username}" class="text-blue-500 dark:text-blue-400 dark:hover:text-blue-600">
+              `<a href="/user/${
+                question.recipent.username
+              }" class="text-blue-500 dark:text-blue-400 dark:hover:text-blue-600">
                     <img
-                        src="${question.recipent.profileImageUrl}"
+                        src="${question.recipent.profileImageUrl.replace(
+                          "_normal",
+                          "_bigger"
+                        )}"
                         alt="Profile Image"
                         class="h-6 w-6 inline rounded-full"
                     />

@@ -41,7 +41,7 @@ const Page: NextPage = () => {
         <div className="mt-20 flex flex-col items-center justify-center gap-12 md:mt-32">
           <div className="flex items-center gap-12">
             <img
-              src={user.data?.profileImageUrl}
+              src={user.data?.profileImageUrl.replace("_normal", "")}
               alt={user.data?.friendlyName}
               className="h-56 w-56 rounded-full"
             />
@@ -151,7 +151,7 @@ const Page: NextPage = () => {
                     <div className="flex items-center space-x-4 lg:space-x-6">
                       <img
                         className="h-16 w-16 rounded-full lg:h-20 lg:w-20"
-                        src={account.profileImageUrl}
+                        src={account.profileImageUrl.replace("_normal", "")}
                         alt=""
                       />
                       <Link
